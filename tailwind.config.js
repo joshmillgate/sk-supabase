@@ -59,7 +59,8 @@ const config = {
 			},
 			fontFamily: {
 				sans: [...fontFamily.sans]
-			}
+			},
+			
 		}
 	},
 };

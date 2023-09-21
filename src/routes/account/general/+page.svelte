@@ -32,7 +32,7 @@
 <form method="post" action="?/update" use:enhance={handleSubmit} bind:this={profileForm}>
 	<div class="flex flex-col w-full gap-3">
 		<Fieldset title="Avatar">
-			<p slot="subtitle" class="my-3 dark:text-neutral-400 font-light">
+			<p slot="subtitle" class="my-3">
 				Your Username will be used on your public profile.
 			</p>
 			<div class="absolute right-5 top-5">
@@ -47,11 +47,11 @@
 			</div>
 		</Fieldset>
 		<Fieldset title="Email">
-			<p slot="subtitle" class="my-3 dark:text-neutral-400 font-light">
+			<p slot="subtitle" class="my-3">
 				Please enter the email address you want to use to log in with.
 			</p>
 			<Input name="email" id="email" type="text" value={session.user.email} disabled />
-			<p slot="statusText" class="dark:text-neutral-600">We will email you to verify the change.</p>
+			<p slot="statusText">We will email you to verify the change.</p>
 			<div slot="footerActions">
 				<Button type="submit" disabled={loading} size="sm" class="ml-auto font-normal"
 					>{#if loading}
@@ -63,7 +63,7 @@
 			</div>
 		</Fieldset>
 		<Fieldset title="Name">
-			<p slot="subtitle" class="my-3 dark:text-neutral-400 font-light">
+			<p slot="subtitle" class="my-3">
 				Please enter your full name, or a display name you are comfortable with.
 			</p>
 			<Input
@@ -73,7 +73,7 @@
 				value={form?.fullName ?? fullName}
 				placeholder="Full name"
 			/>
-			<p slot="statusText" class="dark:text-neutral-600">Please use 32 characters at maximum.</p>
+			<p slot="statusText">Please use 32 characters at maximum.</p>
 			<div slot="footerActions">
 				<Button type="submit" disabled={loading} size="sm" class="ml-auto font-normal"
 					>{#if loading}
@@ -85,7 +85,7 @@
 			</div>
 		</Fieldset>
 		<Fieldset title="Username">
-			<p slot="subtitle" class="my-3 dark:text-neutral-400 font-light">
+			<p slot="subtitle" class="my-3">
 				Your Username will be used on your public profile.
 			</p>
 			<Input
@@ -95,7 +95,7 @@
 						value={form?.username ?? username}
 						placeholder="Username"
 					/>
-			<p slot="statusText" class="dark:text-neutral-600">Please use 32 characters at maximum.</p>
+			<p slot="statusText">Please use 32 characters at maximum.</p>
 			<div slot="footerActions">
 				<Button type="submit" disabled={loading} size="sm" class="ml-auto font-normal"
 					>{#if loading}
@@ -107,7 +107,7 @@
 			</div>
 		</Fieldset>
 		<Fieldset title="Website">
-			<p slot="subtitle" class="my-3 dark:text-neutral-400 font-light">
+			<p slot="subtitle" class="my-3">
 				Your Username will be used on your public profile.
 			</p>
 			<Input
@@ -117,7 +117,7 @@
 						value={form?.website ?? website}
 						placeholder="Website URL"
 					/>
-			<p slot="statusText" class="dark:text-neutral-600">Please use 32 characters at maximum.</p>
+			<p slot="statusText">Please use 32 characters at maximum.</p>
 			<div slot="footerActions">
 				<Button type="submit" disabled={loading} size="sm" class="ml-auto font-normal"
 					>{#if loading}

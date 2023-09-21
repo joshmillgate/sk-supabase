@@ -9,7 +9,7 @@
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
 	import * as Avatar from '$lib/components/ui/avatar';
 
-	import { LogOut, Settings, User } from 'lucide-svelte';
+	import { LogOut, Settings, User, Moon, Sun } from 'lucide-svelte';
 
 	export let data: PageData;
 
@@ -30,18 +30,30 @@
 		return () => subscription.unsubscribe();
 	});
 
+	let dark: boolean;
 	function toggleDark() {
 		document.documentElement.classList.toggle('dark');
+		if (document.documentElement.classList.contains('dark')) {
+			dark = true
+		} else {
+			dark = false
+		}
 	}
 </script>
 
 <header
-	class="supports-backdrop-blur:bg-background/60 sticky top-0 z-40 dark:bg-neutral-950 w-full border-b border-neutral-200 dark:border-neutral-800 bg-background/95 backdrop-blur"
+	class="supports-backdrop-blur:bg-background/60 sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur"
 >
 	<div class="container flex h-14 items-center">
 		<a href="/" class="mr-4 md:flex">Logo</a>
 		<div class="flex flex-1 items-center space-x-2 sm:space-x-2 justify-end">
-			<button on:click={toggleDark}>Dark</button>
+			<button on:click={toggleDark}>
+				{#if dark == true}
+				<Moon class="mr-2 h-4 w-4" />
+				{:else}
+				<Sun class="mr-2 h-4 w-4" />
+				{/if}
+			</button>
 			{#if data.session}
 				<DropdownMenu.Root>
 					<DropdownMenu.Trigger>
