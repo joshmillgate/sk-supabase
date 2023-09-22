@@ -25,7 +25,7 @@
 
 <form method="post" action="?/updatePassword" use:enhance={handleSubmit} bind:this={profileForm}>
 	<Fieldset title="Password">
-		<p slot="subtitle" class="p-margin">
+		<p slot="subtitle" class="my-3">
 			Update your password below.
 		</p>
 		<Input

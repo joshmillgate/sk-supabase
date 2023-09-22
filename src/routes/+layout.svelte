@@ -73,20 +73,20 @@
 							</DropdownMenu.Item>
 							<DropdownMenu.Separator />
 							<DropdownMenu.Item>
-								<a href="/{profile?.username}" class="flex">
+								<a href="/{profile?.username}" class="flex w-full">
 									<User class="mr-2 h-4 w-4" />
 									<span>Profile</span>
 								</a>
 							</DropdownMenu.Item>
 							<DropdownMenu.Item>
-								<a href="/account/general" class="flex">
+								<a href="/account/general" class="flex w-full">
 									<Settings class="mr-2 h-4 w-4" />
 									<span>Account</span>
 								</a>
 							</DropdownMenu.Item>
 							<DropdownMenu.Item>
-								<LogOut class="mr-2 h-4 w-4" />
-								<form action="/logout" method="POST">
+								<form action="/logout" method="POST" class="flex w-full">
+									<LogOut class="mr-2 h-4 w-4" />
 									<button type="submit">Log out</button>
 								</form>
 							</DropdownMenu.Item>
