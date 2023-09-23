@@ -49,17 +49,17 @@
 							<div class="flex relative">
 								<Input id="password" name="password" placeholder="Password" {type} required />
 								<Button
-									type="button"
-									on:click={showPassword}
-									variant="ghost"
-									class="px-3 absolute right-0 rounded-l-none border-l"
-								>
-									{#if type == 'password'}
-										<Eye class="w-4 h-4" />
-									{:else}
-										<EyeOff class="w-4 h-4" />
-									{/if}
-								</Button>
+								type="button"
+								on:click={showPassword}
+								variant="ghost"
+								class="px-3 absolute right-0 rounded-l-none group hover:bg-transparent"
+							>
+								{#if type == 'password'}
+									<Eye class="w-4 h-4 stroke-neutral-400 group-hover:stroke-neutral-600" />
+								{:else}
+									<EyeOff class="w-4 h-4 stroke-neutral-400 group-hover:stroke-neutral-600" />
+								{/if}
+							</Button>
 							</div>
 							<div class="text-xs flex gap-2 items-center justify-center text-center mt-3">
 								<a href="" class="">Forgot password?</a>

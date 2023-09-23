@@ -57,12 +57,12 @@
 								type="button"
 								on:click={showPassword}
 								variant="ghost"
-								class="px-3 absolute right-0 rounded-l-none border-l"
+								class="px-3 absolute right-0 rounded-l-none group hover:bg-transparent"
 							>
 								{#if type == 'password'}
-									<Eye class="w-4 h-4" />
+									<Eye class="w-4 h-4 stroke-neutral-400 group-hover:stroke-neutral-600" />
 								{:else}
-									<EyeOff class="w-4 h-4" />
+									<EyeOff class="w-4 h-4 stroke-neutral-400 group-hover:stroke-neutral-600" />
 								{/if}
 							</Button>
 						</div>
