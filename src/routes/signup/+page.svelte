@@ -20,7 +20,7 @@
 <div class="sm:mx-auto mt-60 max-w-xs">
 	<Card.Root>
 		<Card.Header>
-			<Card.Title tag="h2">Sign up</Card.Title>
+			<Card.Title>Sign up</Card.Title>
 			<Card.Description>Create an account to get started</Card.Description>
 		</Card.Header>
 		<Card.Content>
@@ -32,7 +32,22 @@
 							name="email"
 							placeholder="Email"
 							type="email"
-							value={form?.email ?? ''}
+						/>
+					</div>
+					<div class="flex flex-col w-full">
+						<Input
+							id="full_name"
+							name="full_name"
+							placeholder="Full name"
+							type="text"
+						/>
+					</div>
+					<div class="flex flex-col w-full">
+						<Input
+							id="username"
+							name="username"
+							placeholder="Username"
+							type="text"
 						/>
 					</div>
 					<div class="flex flex-col w-full">
@@ -57,6 +72,7 @@
 				<Button class="w-full mt-2" variant="outline" href="/login"
 					>Already have an account? Log in</Button
 				>
+				<p class="text-xs text-gray-400 mt-6 text-center">By signing up you agree to the Terms and Conditions and Privacy Policy</p>
 				{#if form?.message}
 					<Alert.Root class="mt-4" variant={form.success ? 'success' : 'destructive'}>
 						{#if form.success}

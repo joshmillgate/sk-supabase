@@ -18,6 +18,7 @@
 
 	const { data: avatarUrl } = supabase.storage.from('avatars').getPublicUrl(profile?.avatar_url);
 
+
 	onMount(() => {
 		const {
 			data: { subscription }
@@ -34,9 +35,9 @@
 	function toggleDark() {
 		document.documentElement.classList.toggle('dark');
 		if (document.documentElement.classList.contains('dark')) {
-			dark = true
+			dark = true;
 		} else {
-			dark = false
+			dark = false;
 		}
 	}
 </script>
@@ -49,12 +50,12 @@
 		<div class="flex flex-1 items-center space-x-2 sm:space-x-2 justify-end">
 			<button on:click={toggleDark}>
 				{#if dark == true}
-				<Moon class="mr-2 h-4 w-4" />
+					<Moon class="mr-2 h-4 w-4" />
 				{:else}
-				<Sun class="mr-2 h-4 w-4" />
+					<Sun class="mr-2 h-4 w-4" />
 				{/if}
 			</button>
-			{#if data.session}
+			{#if session && profile }
 				<DropdownMenu.Root>
 					<DropdownMenu.Trigger>
 						<Avatar.Root>
@@ -69,7 +70,7 @@
 									<Avatar.Image src={avatarUrl.publicUrl} alt="@shadcn" />
 									<Avatar.Fallback>JM</Avatar.Fallback>
 								</Avatar.Root>
-								{data.session.user.email}
+								{session.user.email}
 							</DropdownMenu.Item>
 							<DropdownMenu.Separator />
 							<DropdownMenu.Item>
