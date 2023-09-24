@@ -9,8 +9,6 @@
 	import type { PageData } from './$types.js';
 	export let form;
 
-	export let data: PageData;
-
 	let type = 'password';
 	let showPassword = () => {
 		if (type == 'password') {
@@ -24,27 +22,12 @@
 <div class="sm:mx-auto mt-60 max-w-xs">
 	<Card.Root>
 		<Card.Header>
-			<Card.Title tag="h2">Log in</Card.Title>
-			<Card.Description>Let's create something awesome</Card.Description>
+			<Card.Title tag="h2">Set a new password</Card.Title>
+			<Card.Description>Enter a new password below to reset it</Card.Description>
 		</Card.Header>
 		<Card.Content>
-			{#if data.session}
-				<p>Welcome, {data.session.user.email}</p>
-				<form action="/logout" method="POST">
-					<button type="submit" class="btn btn-primary">Log out</button>
-				</form>
-			{:else}
 				<form method="post" use:enhance>
 					<div class="flex flex-col w-full max-w-sm gap-3">
-						<div class="flex flex-col w-full max-w-sm">
-							<Input
-								type="email"
-								id="email"
-								name="email"
-								placeholder="Email"
-								value={form?.email ?? ''}
-							/>
-						</div>
 						<div class="flex flex-col w-full max-w-sm">
 							<div class="flex relative">
 								<Input id="password" name="password" placeholder="Password" {type} required />
@@ -61,17 +44,27 @@
 								{/if}
 							</Button>
 							</div>
-							<div class="text-xs flex gap-2 items-center justify-center text-center mt-3">
-								<a href="/login/reset-password" class="">Forgot password?</a>
+						</div>
+						<div class="flex flex-col w-full max-w-sm">
+							<div class="flex relative">
+								<Input id="password" name="password" placeholder="Confirm password" {type} required />
+								<Button
+								type="button"
+								on:click={showPassword}
+								variant="ghost"
+								class="px-3 absolute right-0 rounded-l-none group hover:bg-transparent"
+							>
+								{#if type == 'password'}
+									<Eye class="w-4 h-4 stroke-neutral-400 group-hover:stroke-neutral-600" />
+								{:else}
+									<EyeOff class="w-4 h-4 stroke-neutral-400 group-hover:stroke-neutral-600" />
+								{/if}
+							</Button>
 							</div>
 						</div>
 					</div>
-					<Button class="w-full mt-6">Log in</Button>
-					<Button class="w-full mt-2" variant="outline" href="/signup"
-						>No Account? Sign up</Button
-					>
+					<Button class="w-full mt-6">Update password</Button>
 				</form>
-			{/if}
 			{#if form?.message}
 				<Alert.Root class="mt-4" variant={form.success ? 'success' : 'destructive'}>
 					{#if form.success}

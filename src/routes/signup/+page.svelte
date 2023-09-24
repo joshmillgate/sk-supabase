@@ -32,6 +32,7 @@
 							name="email"
 							placeholder="Email"
 							type="email"
+							required
 						/>
 					</div>
 					<div class="flex flex-col w-full">
@@ -40,6 +41,7 @@
 							name="full_name"
 							placeholder="Full name"
 							type="text"
+							required
 						/>
 					</div>
 					<div class="flex flex-col w-full">
@@ -48,6 +50,7 @@
 							name="username"
 							placeholder="Username"
 							type="text"
+							required
 						/>
 					</div>
 					<div class="flex flex-col w-full">
