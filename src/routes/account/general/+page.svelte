@@ -1,6 +1,7 @@
 <!-- src/routes/account/+page.svelte -->
 <script lang="ts">
 	import type { SubmitFunction } from '@sveltejs/kit';
+	import toast, { Toaster } from 'svelte-french-toast';
 	import { enhance } from '$app/forms';
 	import { Input } from '$lib/components/ui/input';
 	import { Button } from '$lib/components/ui/button';
@@ -23,15 +24,16 @@
 
 	const handleSubmit: SubmitFunction = () => {
 		loading = true;
-		return async () => {
+		return async (result) => {
 			loading = false;
 		};
 	};
 </script>
-
-<form method="post" action="?/update" use:enhance={handleSubmit} bind:this={profileForm}>
+<Toaster />
+<!-- Avatar form is not gonna work because this form no longer exists-->
+<!-- <form method="post" action="?/update" use:enhance={handleSubmit} bind:this={profileForm}> -->
 	<div class="flex flex-col w-full gap-3">
-		<Fieldset title="Avatar">
+		<Fieldset title="Avatar" actionName="Avatar">
 			<p slot="subtitle" class="my-3">
 				Your Username will be used on your public profile.
 			</p>
@@ -46,7 +48,7 @@
 				/>
 			</div>
 		</Fieldset>
-		<Fieldset title="Email">
+		<Fieldset title="Email" actionName="Email">
 			<p slot="subtitle" class="my-3">
 				Please enter the email address you want to use to log in with.
 			</p>
@@ -62,7 +64,7 @@
 				>
 			</div>
 		</Fieldset>
-		<Fieldset title="Name">
+		<Fieldset title="Name" actionName="Name">
 			<p slot="subtitle" class="my-3">
 				Please enter your full name, or a display name you are comfortable with.
 			</p>
@@ -84,7 +86,7 @@
 				>
 			</div>
 		</Fieldset>
-		<Fieldset title="Username">
+		<Fieldset title="Username" actionName="Username">
 			<p slot="subtitle" class="my-3">
 				Your Username will be used on your public profile.
 			</p>
@@ -106,7 +108,7 @@
 				>
 			</div>
 		</Fieldset>
-		<Fieldset title="Website">
+		<Fieldset title="Website" actionName="Website">
 			<p slot="subtitle" class="my-3">
 				Your Username will be used on your public profile.
 			</p>
@@ -148,6 +150,6 @@
 			</Alert.Root>
 		{/if}
 	</div>
-</form>
+<!-- </form> -->
 
 
