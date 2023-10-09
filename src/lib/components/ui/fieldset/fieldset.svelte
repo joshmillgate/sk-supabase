@@ -1,21 +1,7 @@
 <script lang="ts">
-	import type { SubmitFunction } from '@sveltejs/kit';
-	import { enhance } from '$app/forms';
 	export let title: string;
-	export let actionName: string;
-	let form: HTMLFormElement;
-	let loading = false;
-
-	export const handleSubmit: SubmitFunction = () => {
-		loading = true;
-		return async (result) => {
-			loading = false;
-			console.log('form submit')
-		};
-	};
 </script>
 
-<form method="post" action="?/update{actionName}" use:enhance={handleSubmit} bind:this={form}>
 	<div class="border rounded-md relative dark:bg-muted">
 		<div class="p-6">
 			<h4 class="text-xl font-semibold">{title}</h4>
@@ -31,4 +17,3 @@
 			</footer>
 		{/if}
 	</div>
-</form>

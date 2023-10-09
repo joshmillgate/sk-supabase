@@ -1,6 +1,15 @@
+import { z } from 'zod'
 import { fail, redirect } from '@sveltejs/kit'
+import { superValidate } from 'sveltekit-superforms/server'
 
-export const load = async ({ locals: { supabase, getSession } }) => {
+const profileSchema = z.object({
+    full_name: z.string(),
+    username: z.string(),
+    website: z.string(),
+    avatar_url: z.string()
+})
+
+export const load = async ({ locals: { supabase, getSession }, request }) => {
     const session = await getSession()
 
     if (!session) {
@@ -13,113 +22,39 @@ export const load = async ({ locals: { supabase, getSession } }) => {
         .eq('id', session.user.id)
         .single()
 
-    return { session, profile }
+    const form = await superValidate(profile, profileSchema)
+
+    return { form, session, profile }
 }
 
 export const actions = {
-    updateAvatar: async ({ request, locals: { supabase, getSession } }) => {
-        const formData = await request.formData()
-        const avatarUrl = formData.get('avatarUrl') as string
+    updateProfile: async ({ request, locals: { supabase, getSession } }) => {
         const session = await getSession()
+        const form = await superValidate(request, profileSchema)
 
-        const { error } = await supabase.from('profiles').upsert({
-            id: session?.user.id,
-            avatar_url: avatarUrl,
-            updated_at: new Date(),
-        })
-
-        if (error) {
-            return fail(500, {
-                error,
-                success: false,
-                message: 'Server error. Try again later.',
-                avatarUrl,
+        if (!form.valid) {
+            return fail(400, {
+                form
             })
         }
 
-        return {
-            success: true,
-            message: 'Account info successfully updated',
-            avatarUrl,
-        }
-    },
-    updateWebsite: async ({ request, locals: { supabase, getSession } }) => {
-        const formData = await request.formData()
-        const website = formData.get('website') as string
-        const session = await getSession()
+        const full_name = form.data.full_name
+        const website = form.data.website
+        const username = form.data.username
+        const avatar_url = form.data.avatar_url
+        
 
         const { error } = await supabase.from('profiles').upsert({
             id: session?.user.id,
+            full_name,
             website,
-            updated_at: new Date(),
-        })
-
-        if (error) {
-            return fail(500, {
-                error,
-                success: false,
-                message: 'Server error. Try again later.',
-                website
-            })
-        }
-
-        return {
-            success: true,
-            message: 'Website successfully updated',
-            website
-        }
-    },
-    updateName: async ({ request, locals: { supabase, getSession } }) => {
-        const formData = await request.formData()
-        const fullName = formData.get('fullName') as string
-        const session = await getSession()
-
-        const { error } = await supabase.from('profiles').upsert({
-            id: session?.user.id,
-            fullName,
-            updated_at: new Date(),
-        })
-
-        if (error) {
-            return fail(500, {
-                error,
-                success: false,
-                message: 'Server error. Try again later.',
-                fullName
-            })
-        }
-
-        return {
-            success: true,
-            message: 'Name successfully updated',
-            fullName
-        }
-    },
-    updateUsername: async ({ request, locals: { supabase, getSession } }) => {
-        const formData = await request.formData()
-        const username = formData.get('username') as string
-        const session = await getSession()
-
-        const { error } = await supabase.from('profiles').upsert({
-            id: session?.user.id,
             username,
+            avatar_url,
             updated_at: new Date(),
         })
 
-        if (error) {
-            return fail(500, {
-                error,
-                success: false,
-                message: 'Server error. Try again later.',
-                username
-            })
-        }
+        return { form }
 
-        return {
-            success: true,
-            message: 'Username successfully updated',
-            username
-        }
     },
     signout: async ({ locals: { supabase, getSession } }) => {
         const session = await getSession()

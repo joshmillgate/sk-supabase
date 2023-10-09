@@ -25,7 +25,7 @@
 	secondInitial = words[1][0];
 	initials = firstInitial + secondInitial;
 
-	const { data: avatarUrl } = supabase.storage.from('avatars').getPublicUrl(profile?.avatar_url);
+	const { data: avatar_url } = supabase.storage.from('avatars').getPublicUrl(profile?.avatar_url);
 </script>
 
 {#if !profile?.username || !profile?.full_name}
@@ -38,7 +38,7 @@
 				<form method="post" use:enhance>
 					<div class="flex flex-col w-full gap-3 my-3">
 						<div class="flex flex-col w-full">
-							<Input id="fullName" name="fullName" placeholder="Name" type="text" />
+							<Input id="full_name" name="full_name" placeholder="Name" type="text" />
 						</div>
 						<div class="flex flex-col w-full">
 							<Input id="username" name="username" placeholder="Username" type="text" />
@@ -54,7 +54,7 @@
 	</Dialog.Root>
 {:else}
 	<Avatar.Root class="w-20 h-20 mr-3">
-		<Avatar.Image src={avatarUrl.publicUrl} alt="@shadcn" />
+		<Avatar.Image src={avatar_url.publicUrl} alt="@shadcn" />
 		<Avatar.Fallback>{initials}</Avatar.Fallback>
 	</Avatar.Root>
 	<div class="mt-4">

@@ -16,7 +16,7 @@
 	let { supabase, session, profile } = data;
 	$: ({ supabase, session, profile } = data);
 
-	const { data: avatarUrl } = supabase.storage.from('avatars').getPublicUrl(profile?.avatar_url);
+	const { data: avatar_url } = supabase.storage.from('avatars').getPublicUrl(profile?.avatar_url);
 
 
 	onMount(() => {
@@ -59,7 +59,7 @@
 				<DropdownMenu.Root>
 					<DropdownMenu.Trigger>
 						<Avatar.Root>
-							<Avatar.Image src={avatarUrl.publicUrl} alt="@shadcn" />
+							<Avatar.Image src={avatar_url.publicUrl} alt="@shadcn" />
 							<Avatar.Fallback>JM</Avatar.Fallback>
 						</Avatar.Root>
 					</DropdownMenu.Trigger>
@@ -67,7 +67,7 @@
 						<DropdownMenu.Group>
 							<DropdownMenu.Item>
 								<Avatar.Root class="w-5 h-5 mr-3">
-									<Avatar.Image src={avatarUrl.publicUrl} alt="@shadcn" />
+									<Avatar.Image src={avatar_url.publicUrl} alt="@shadcn" />
 									<Avatar.Fallback>JM</Avatar.Fallback>
 								</Avatar.Root>
 								{session.user.email}

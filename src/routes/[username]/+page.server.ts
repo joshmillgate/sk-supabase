@@ -19,7 +19,7 @@ export const load = async ({ params, locals: { supabase, getSession } }) => {
 export const actions = {
     default: async ({ request, locals: { supabase, getSession } }) => {
         const formData = await request.formData()
-        const fullName = formData.get('fullName') as string
+        const full_name = formData.get('full_name') as string
         const username = formData.get('username') as string
         const website = formData.get('website') as string
 
@@ -27,7 +27,7 @@ export const actions = {
 
         const { error } = await supabase.from('profiles').upsert({
             id: session?.user.id,
-            full_name: fullName,
+            full_name: full_name,
             username,
             website,
             updated_at: new Date(),
@@ -38,7 +38,7 @@ export const actions = {
                 error,
                 success: false,
                 message: 'Server error. Try again later.',
-                fullName,
+                full_name,
                 username,
                 website,
             })
@@ -47,7 +47,7 @@ export const actions = {
         return {
             success: true,
             message: 'Account info successfully updated',
-            fullName,
+            full_name,
             username,
             website,
         }

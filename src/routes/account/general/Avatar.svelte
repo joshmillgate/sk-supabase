@@ -6,7 +6,7 @@
 	export let url: string
 	export let supabase: SupabaseClient
 
-	let avatarUrl: string | null = null
+	let avatar_url: string | null = null
 	let uploading = false
 	let files: FileList
 
@@ -21,7 +21,7 @@
 			}
 
 			const url = URL.createObjectURL(data)
-			avatarUrl = url
+			avatar_url = url
 		} catch (error) {
 			if (error instanceof Error) {
 				console.log('Error downloading image: ', error.message)
@@ -64,17 +64,17 @@
 </script>
 
 <div class="relative">
-	{#if avatarUrl}
+	{#if avatar_url}
 		<img
-			src={avatarUrl}
-			alt={avatarUrl ? 'Avatar' : 'No image'}
+			src={avatar_url}
+			alt={avatar_url ? 'Avatar' : 'No image'}
 			class="avatar image rounded-full"
 			style="height: {size}em; width: {size}em;"
 		/>
 	{:else}
 		<div class="avatar no-image" style="height: {size}em; width: {size}em;" />
 	{/if}
-	<input type="hidden" name="avatarUrl" value={url} />
+	<input type="hidden" name="avatar_url" value={url} />
 
 	<div style="width: {size}em;">
 		<label class="h-full w-full absolute top-0 cursor-pointer rounded-full hover:bg-white/10 transition-colors" for="single">
