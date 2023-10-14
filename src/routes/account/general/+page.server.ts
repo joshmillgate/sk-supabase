@@ -1,13 +1,7 @@
-import { z } from 'zod'
 import { fail, redirect } from '@sveltejs/kit'
-import { superValidate } from 'sveltekit-superforms/server'
+import { message, superValidate } from 'sveltekit-superforms/server'
+import { profileSchema } from './schema';
 
-const profileSchema = z.object({
-    full_name: z.string(),
-    username: z.string(),
-    website: z.string(),
-    avatar_url: z.string()
-})
 
 export const load = async ({ locals: { supabase, getSession }, request }) => {
     const session = await getSession()
@@ -33,16 +27,16 @@ export const actions = {
         const form = await superValidate(request, profileSchema)
 
         if (!form.valid) {
-            return fail(400, {
-                form
-            })
+            return message(form, 'Invalid form');
+            // return fail(400, {
+            //     form
+            // })
         }
 
         const full_name = form.data.full_name
         const website = form.data.website
         const username = form.data.username
         const avatar_url = form.data.avatar_url
-        
 
         const { error } = await supabase.from('profiles').upsert({
             id: session?.user.id,
@@ -53,7 +47,8 @@ export const actions = {
             updated_at: new Date(),
         })
 
-        return { form }
+        return message(form, 'Profile information updated!');
+        // return { form, error }
 
     },
     signout: async ({ locals: { supabase, getSession } }) => {

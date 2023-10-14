@@ -10,10 +10,13 @@
 	import { Check, AlertCircle, Loader2 } from 'lucide-svelte';
 	import Avatar from './Avatar.svelte';
 	import type { PageData } from './$types.js';
-	import SuperDebug from 'sveltekit-superforms/client/SuperDebug.svelte'
+	import SuperDebug from 'sveltekit-superforms/client/SuperDebug.svelte';
+	import ProfileForm from "./profile-form.svelte";
 
 	export let data: PageData;
-	const { form, errors, enhance } = superForm(data.form);
+	const { form, message, errors, enhance } = superForm(data.form);
+
+	console.log(message);
 
 	// console.log(data)
 
@@ -33,8 +36,9 @@
 
 <Toaster />
 <SuperDebug data={$form} />
-{#if $errors}
-<p>{$errors}</p>
+
+{#if $message}
+	<div class="message">{$message}</div>
 {/if}
 <div class="flex flex-col w-full gap-3">
 	<form method="post" action="?/updateProfile" use:enhance bind:this={profileForm}>
@@ -63,6 +67,9 @@
 			bind:value={$form.full_name}
 			placeholder="Full name"
 		/>
+		{#if $errors.full_name}
+			<small>{$errors.full_name}</small>
+		{/if}
 		<h2 class="font-bold">Username</h2>
 		<Input
 			name="username"
