@@ -18,7 +18,6 @@
 
 	const { data: avatar_url } = supabase.storage.from('avatars').getPublicUrl(profile?.avatar_url);
 
-
 	onMount(() => {
 		const {
 			data: { subscription }
@@ -43,18 +42,18 @@
 </script>
 
 <header
-	class="supports-backdrop-blur:bg-background/60 sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur"
+	class="supports-backdrop-blur:bg-background/60 sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur flex justify-center mb-16	"
 >
-	<div class="container flex h-14 items-center">
-		<a href="/" class="mr-4 md:flex">Logo</a>
+	<div class="flex h-16 items-center w-full max-w-2xl">
+		<a href="/" class="mr-4 md:flex font-semibold tracking-tight text-xl">Serenade</a>
 		<div class="flex flex-1 items-center space-x-2 sm:space-x-2 justify-end">
-			<button on:click={toggleDark}>
+			<Button on:click={toggleDark} variant="outline" class="p-3 w-10 rounded-full justify-center">
 				{#if dark == true}
-					<Moon class="mr-2 h-4 w-4" />
+					<Moon class="h-4 w-4" />
 				{:else}
-					<Sun class="mr-2 h-4 w-4" />
+					<Sun class="h-4 w-4" />
 				{/if}
-			</button>
+			</Button>
 			{#if session && profile }
 				<DropdownMenu.Root>
 					<DropdownMenu.Trigger>
@@ -80,15 +79,15 @@
 								</a>
 							</DropdownMenu.Item>
 							<DropdownMenu.Item>
-								<a href="/account/general" class="flex w-full">
+								<a href="/settings/account" class="flex w-full">
 									<Settings class="mr-2 h-4 w-4" />
-									<span>Account</span>
+									<span>Settings</span>
 								</a>
 							</DropdownMenu.Item>
 							<DropdownMenu.Item>
 								<form action="/logout" method="POST" class="flex w-full">
 									<LogOut class="mr-2 h-4 w-4" />
-									<button type="submit">Log out</button>
+									<button type="submit" class="w-full inline-flex">Log out</button>
 								</form>
 							</DropdownMenu.Item>
 						</DropdownMenu.Group>
@@ -105,4 +104,6 @@
 		</div>
 	</div>
 </header>
+<div class="mt-8 sm:mx-auto sm:w-full sm:max-w-2xl">	 
 <slot />
+</div>

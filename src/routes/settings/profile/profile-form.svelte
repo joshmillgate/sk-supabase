@@ -1,21 +1,17 @@
 <script lang="ts">
 	import * as Form from '$lib/components/ui/form';
-	import Avatar from './Avatar.svelte';
 	import { profileSchema, type ProfileSchema } from './schema';
 	import type { SuperValidated } from 'sveltekit-superforms';
 	export let form: SuperValidated<ProfileSchema>;
 	import type { PageData } from './$types.js';
+	import Avatar from './Avatar.svelte';
+
+	
 
 	export let data: PageData;
 
 	let { session, supabase, profile } = data;
 	$: ({ session, supabase, profile } = data);
-
-	interface MyForm extends SuperValidated<ProfileSchema> {
-    requestSubmit: () => void;
-}
-
-// export let form2: MyForm;
 </script>
 
 <Form.Root method="POST" {form} action="?/updateProfile" schema={profileSchema} let:config>

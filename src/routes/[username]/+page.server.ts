@@ -1,4 +1,4 @@
-import { redirect, fail, type Actions } from '@sveltejs/kit'
+import { redirect } from '@sveltejs/kit';
 
 export const load = async ({ params, locals: { supabase, getSession } }) => {
     const session = await getSession()
@@ -9,47 +9,14 @@ export const load = async ({ params, locals: { supabase, getSession } }) => {
 
     const { data: profile } = await supabase
         .from('profiles')
-        .select(`username, full_name, website, avatar_url, id`)
+        .select(`username, full_name, website, avatar_url, xcom, id`)
         .eq('username', params.username)
         .single()
 
-    return { session, profile }
-}
+    const { data: avatar_url } = await supabase
+        .storage
+        .from('avatars')
+        .getPublicUrl(profile?.avatar_url)
 
-export const actions = {
-    default: async ({ request, locals: { supabase, getSession } }) => {
-        const formData = await request.formData()
-        const full_name = formData.get('full_name') as string
-        const username = formData.get('username') as string
-        const website = formData.get('website') as string
-
-        const session = await getSession()
-
-        const { error } = await supabase.from('profiles').upsert({
-            id: session?.user.id,
-            full_name: full_name,
-            username,
-            website,
-            updated_at: new Date(),
-        })
-
-        if (error) {
-            return fail(500, {
-                error,
-                success: false,
-                message: 'Server error. Try again later.',
-                full_name,
-                username,
-                website,
-            })
-        }
-
-        return {
-            success: true,
-            message: 'Account info successfully updated',
-            full_name,
-            username,
-            website,
-        }
-    }
+    return { session, profile, avatar_url }
 }

@@ -5,16 +5,16 @@
 	import * as Dialog from '$lib/components/ui/dialog';
 	import { Input } from '$lib/components/ui/input';
 	import { Button } from '$lib/components/ui/button';
+	import { Edit, Globe } from 'lucide-svelte';
+	import * as Tooltip from '$lib/components/ui/tooltip';
 
 	export let data: PageData;
 
-	let { supabase, session, profile } = data;
-	$: ({ supabase, session, profile } = data);
+	let { session, profile, avatar_url } = data;
+	$: ({ session, profile, avatar_url } = data);
 
-	let isUserProfile = false;
-	if (session.user.id === profile?.id) {
-		isUserProfile = true;
-	}
+	let avatarPublicUrl = avatar_url.publicUrl;
+	$: avatarPublicUrl = avatar_url.publicUrl;
 
 	let firstInitial: string;
 	let secondInitial: string;
@@ -24,8 +24,6 @@
 	firstInitial = words[0][0];
 	secondInitial = words[1][0];
 	initials = firstInitial + secondInitial;
-
-	const { data: avatar_url } = supabase.storage.from('avatars').getPublicUrl(profile?.avatar_url);
 </script>
 
 {#if !profile?.username || !profile?.full_name}
@@ -53,19 +51,48 @@
 		</Dialog.Content>
 	</Dialog.Root>
 {:else}
-	<Avatar.Root class="w-20 h-20 mr-3">
-		<Avatar.Image src={avatar_url.publicUrl} alt="@shadcn" />
-		<Avatar.Fallback>{initials}</Avatar.Fallback>
-	</Avatar.Root>
+	{#key avatarPublicUrl}
+		<Avatar.Root class="w-20 h-20 mr-3">
+			<Avatar.Image src={avatarPublicUrl} alt="@shadcn" />
+			<Avatar.Fallback>{initials}</Avatar.Fallback>
+		</Avatar.Root>
+	{/key}
 	<div class="mt-4">
 		<h1 class="text-xl font-semibold">{profile?.full_name}</h1>
-		<h2>@{profile?.username}</h2>
-		{#if isUserProfile && !profile?.website}
-			<p>Add a link to your website</p>
-		{:else}
-			<a class="text-neutral-400 hover:text-neutral-500" href={profile?.website}
-				>{profile?.website}</a
-			>
-		{/if}
+		<p class="text-l opacity-60">@{profile?.username}</p>
+		<div class="flex items-center gap-2 mt-5">
+			<Tooltip.Root>
+				<Tooltip.Trigger>
+					<Button href="https://x.com/{profile?.xcom}" target="_blank" variant="outline" size="sm" class="text-xl"
+						>𝕏</Button
+					>
+				</Tooltip.Trigger>
+				<Tooltip.Content>
+					<p>@{profile?.xcom}</p>
+				</Tooltip.Content>
+			</Tooltip.Root>
+
+			{#if !profile?.website && session.user.id === profile?.id}
+				<Button variant="link" href="/settings/profile"
+					><Edit class="mr-2 h-3.5 w-3.5" />Add a website</Button
+				>
+			{:else}
+				<Tooltip.Root>
+					<Tooltip.Trigger>
+						<Button href={profile?.website} target="_blank" variant="outline" size="sm"
+							><Globe class="h-4 w-4" /></Button
+						>
+					</Tooltip.Trigger>
+					<Tooltip.Content>
+						<p>{profile?.website}</p>
+					</Tooltip.Content>
+				</Tooltip.Root>
+			{/if}
+		</div>
 	</div>
+{/if}
+{#if session.user.id === profile?.id}
+	<Button href="/settings/profile" size="sm" variant="outline" class="mt-4 font-normal"
+		><Edit class="mr-2 h-3.5 w-3.5" />Edit profile</Button
+	>
 {/if}

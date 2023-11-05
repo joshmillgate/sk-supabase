@@ -1,29 +1,11 @@
 <script lang="ts">
-	import type { SubmitFunction } from '@sveltejs/kit';
-	import { enhance } from '$app/forms';
-	import { Input } from '$lib/components/ui/input';
-	import { Button } from '$lib/components/ui/button';
-	import * as Alert from '$lib/components/ui/alert';
-	import { Fieldset } from '$lib/components/ui/fieldset';
-	import { Check, AlertCircle, Loader2 } from 'lucide-svelte';
+	import type { PageData } from './$types.js';
+	import PasswordForm from './password-form.svelte';
 
-	export let data;
-	export let form;
-	let { session, supabase, profile } = data;
-	$: ({ session, supabase, profile } = data);
-
-	let profileForm: HTMLFormElement;
-	let loading = false;
-
-	const handleSubmit: SubmitFunction = () => {
-		loading = true;
-		return async () => {
-			loading = false;
-		};
-	};
+	export let data: PageData;
 </script>
-
-<form method="post" action="?/updatePassword" use:enhance={handleSubmit} bind:this={profileForm}>
+<PasswordForm form={data.form} />
+<!-- <form method="post" action="?/updatePassword" use:enhance={handleSubmit} bind:this={profileForm}>
 	<Fieldset title="Password">
 		<p slot="subtitle" class="my-3">
 			Update your password below.
@@ -60,4 +42,4 @@
 			</Alert.Description>
 		</Alert.Root>
 	{/if}
-</form>
+</form> -->

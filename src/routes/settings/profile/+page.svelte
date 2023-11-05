@@ -16,10 +16,6 @@
 	export let data: PageData;
 	const { form, message, errors, enhance } = superForm(data.form);
 
-	console.log(message);
-
-	// console.log(data)
-
 	let { session, supabase, profile } = data;
 	$: ({ session, supabase, profile } = data);
 
@@ -35,7 +31,7 @@
 </script>
 
 <Toaster />
-<SuperDebug data={$form} />
+<!-- <SuperDebug data={$form} /> -->
 
 {#if $message}
 	<div class="message">{$message}</div>
@@ -56,8 +52,8 @@
 				/>
 			</div>
 		</Fieldset>
-		<h2 class="font-bold">Email</h2>
-		<Input name="email" id="email" type="text" bind:value={session.user.email} disabled />
+		<!-- <h2 class="font-bold">Email</h2>
+		<Input name="email" id="email" type="text" bind:value={session.user.email} disabled /> -->
 
 		<h2 class="font-bold">Name</h2>
 		<Input
@@ -70,14 +66,6 @@
 		{#if $errors.full_name}
 			<small>{$errors.full_name}</small>
 		{/if}
-		<h2 class="font-bold">Username</h2>
-		<Input
-			name="username"
-			id="username"
-			type="text"
-			bind:value={$form.username}
-			placeholder="Username"
-		/>
 		<h2 class="font-bold">Website</h2>
 		<Input
 			name="website"
@@ -86,7 +74,14 @@
 			bind:value={$form.website}
 			placeholder="Website URL"
 		/>
-
+		<h2 class="font-bold">X.com</h2>
+		<Input
+			name="xcom"
+			id="xcom"
+			type="text"
+			bind:value={$form.xcom}
+			placeholder="Username on x.com"
+		/>
 		<Button type="submit" disabled={loading} size="sm" class="ml-auto font-normal"
 			>{#if loading}
 				<Loader2 class="animate-spin h-4 w-4" />

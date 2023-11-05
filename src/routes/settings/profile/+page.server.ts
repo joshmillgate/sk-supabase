@@ -12,7 +12,7 @@ export const load = async ({ locals: { supabase, getSession }, request }) => {
 
     const { data: profile } = await supabase
         .from('profiles')
-        .select(`username, full_name, website, avatar_url`)
+        .select(`username, full_name, website, avatar_url, xcom`)
         .eq('id', session.user.id)
         .single()
 
@@ -37,6 +37,7 @@ export const actions = {
         const website = form.data.website
         const username = form.data.username
         const avatar_url = form.data.avatar_url
+        const xcom = form.data.xcom
 
         const { error } = await supabase.from('profiles').upsert({
             id: session?.user.id,
@@ -44,6 +45,7 @@ export const actions = {
             website,
             username,
             avatar_url,
+            xcom,
             updated_at: new Date(),
         })
 

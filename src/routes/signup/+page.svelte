@@ -17,7 +17,7 @@
 	};
 </script>
 
-<div class="sm:mx-auto mt-60 max-w-xs">
+<div class="sm:mx-auto max-w-xs">
 	<Card.Root>
 		<Card.Header>
 			<Card.Title>Sign up</Card.Title>
