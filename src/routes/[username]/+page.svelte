@@ -61,22 +61,23 @@
 		<h1 class="text-xl font-semibold">{profile?.full_name}</h1>
 		<p class="text-l opacity-60">@{profile?.username}</p>
 		<div class="flex items-center gap-2 mt-5">
-			<Tooltip.Root>
-				<Tooltip.Trigger>
-					<Button href="https://x.com/{profile?.xcom}" target="_blank" variant="outline" size="sm" class="text-xl"
-						>𝕏</Button
-					>
-				</Tooltip.Trigger>
-				<Tooltip.Content>
-					<p>@{profile?.xcom}</p>
-				</Tooltip.Content>
-			</Tooltip.Root>
-
-			{#if !profile?.website && session.user.id === profile?.id}
-				<Button variant="link" href="/settings/profile"
-					><Edit class="mr-2 h-3.5 w-3.5" />Add a website</Button
-				>
-			{:else}
+			{#if profile?.xcom}
+				<Tooltip.Root>
+					<Tooltip.Trigger>
+						<Button
+							href="https://x.com/{profile?.xcom}"
+							target="_blank"
+							variant="outline"
+							size="sm"
+							class="text-xl">𝕏</Button
+						>
+					</Tooltip.Trigger>
+					<Tooltip.Content>
+						<p>@{profile?.xcom}</p>
+					</Tooltip.Content>
+				</Tooltip.Root>
+			{/if}
+			{#if profile?.website}
 				<Tooltip.Root>
 					<Tooltip.Trigger>
 						<Button href={profile?.website} target="_blank" variant="outline" size="sm"
